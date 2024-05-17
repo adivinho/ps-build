@@ -853,6 +853,19 @@ pipeline {
     }
     post {
         always {
+            script {
+                def result = currentBuild.result
+                def fullName = currentBuild.getBuildCauses()[0].shortDescription
+                def userId = currentBuild.getBuildCauses()[0].userId
+                def user = hudson.model.User.get(userId, false, null)
+                def email = user?.getProperty(hudson.tasks.Mailer.UserProperty)?.address
+                if ("${email}") {
+                    def slackUserId = slackUserIdFromEmail("${email}")
+                    slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )")
+                } else {
+                    slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand:")
+                }
+            }
             triggerAbortedTestWorkersRerun()
             sh 'echo Finish: \$(date -u "+%s")'
         }
