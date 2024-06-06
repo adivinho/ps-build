@@ -824,7 +824,8 @@ pipeline {
                 def email = user?.getProperty(hudson.tasks.Mailer.UserProperty)?.address
                 if ("${email}") {
                     def slackUserId = slackUserIdFromEmail("${email}")
-                    slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )")
+                    echo "$slackUserId"
+                    // slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )")
                 } else {
                     slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand:")
                 }
