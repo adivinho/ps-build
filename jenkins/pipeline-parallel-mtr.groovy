@@ -860,12 +860,12 @@ pipeline {
                 def user = hudson.model.User.get(userId, false, null)
                 def email = user?.getProperty(hudson.tasks.Mailer.UserProperty)?.address
                 if ("${email}") {
-                    //def slackUserId = slackUserIdFromEmail("${email}")
+                    def slackUserId = slackUserIdFromEmail("${email}")
                     echo "${email}"
                     // slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )")
-                    slackSend botUser: true, channel: '#test-jenkins', color: '#0000FF', message: "[${JOB_NAME}]: is ${result}. :spock-hand:"
+                    slackSend botUser: true, channel: '#test-jenkins', color: '#0000FF', message: "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )"
                 } else {
-                    slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand:")
+                    slackSend botUser: true, channel: '#test-jenkins', color: '#0000FF', message: "[${JOB_NAME}]: is ${result}. :spock-hand:"
                 }
             }
             triggerAbortedTestWorkersRerun()
