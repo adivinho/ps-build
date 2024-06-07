@@ -863,7 +863,7 @@ pipeline {
                     //def slackUserId = slackUserIdFromEmail("${email}")
                     echo "${email}"
                     // slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand: It was started by ${userId} ($fullName / <@$slackUserId> )")
-                    SlackSend botUser: true, channel: '#test-jenkins', color: '#0000FF', message: "[${JOB_NAME}]: is ${result}. :spock-hand:"
+                    slackSend botUser: true, channel: '#test-jenkins', color: '#0000FF', message: "[${JOB_NAME}]: is ${result}. :spock-hand:"
                 } else {
                     slackNotify("#test-jenkins", "#0000FF", "[${JOB_NAME}]: is ${result}. :spock-hand:")
                 }
